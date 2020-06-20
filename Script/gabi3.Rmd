@@ -1,0 +1,67 @@
+---
+title: "logCFU/g na base"
+author: "Eduardo de Freitas Costa"
+date: "Dezembro 19, 2018"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 5
+    theme: flatly
+---
+
+```{r carregando pacotes} 
+library(readxl)
+library(BRugs)
+library(coda)
+```
+
+
+```{r carregando dados}
+setwd("D:/Gabriela")
+sal <- read_excel("bayes_3.xlsx")
+View(sal)
+```
+
+
+```{r modelo}
+modelo = function(){
+  for(i in 1:20){
+    for(j in 1:2){
+       Y[i,j] ~ dpois(D[i])
+      }
+      D[i]<-N[i]*d[i]
+      E[i]<-N[i]*f
+      N[i]~dgamma(5,G[i])
+      G[i]<-0.05*d[i]
+  }
+    f<-0.1
+  
+  
+   
+}
+inits <- function(){
+  N=(rep(500000,20))
+}
+  parameters1 <- "N"
+
+dados = list(d=sal$d, Y = array(cbind(sal$placa1, sal$placa2), dim=c(20,2)))
+
+
+simul_sal <- BRugsFit(modelo, dados, inits, numChains = 1, parameters1,
+                             nBurnin = 100, nIter=100000, nThin=20, coda=T)
+```
+
+
+```{r resultados e diagnósticos}
+plot(simul_sal)
+effectiveSize(simul_sal)
+autocorr.diag(simul_sal)
+summary(simul_sal)
+
+```
+
+```{r}
+write.csv(log(summary(simul_sal)$quantiles,10),file='bayes_output3')
+```
+
