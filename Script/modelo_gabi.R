@@ -2,7 +2,6 @@
 #######Modelo Gabi#######
 #########################
 
-
 ###Vetores de tempo
 tempo_hora<-c(0,4,8,16,21,29,42,54,66,78,88,102,140,188,245,307,379,454,523,643,715,837,941)
 delta<-c(0,4,4,8,5,8,13,12,12,12,10,14,38,48,57,62,72,75,69,120,72,122,104)
@@ -235,11 +234,14 @@ for (i in 2:23){
   }
   
 }
+
+tiff(file=here("Figura","modelo.tiff"), height = 4, width = 7, units = 'in', res=300)
+
 par(mfrow=c(1,2))
 par(xpd=FALSE)
 par(mar = c(5, 5, 1, 1))
 plot(tempo_hora,UFC,xlim=c(0,1000),ylim=c(3,9), ylab='log(CFU/g)',xlab='Time (hours)',col = "black", 
-     pch = 20,lwd=2,cex.lab=2,cex.axis=1.5,cex=2)
+     pch = 20,lwd=2,cex.lab=1.5,cex.axis=1,cex=2)
 par(xpd=FALSE)
 lines(tempo_hora,CFU,type='l',col='black',pch = 20,lwd=2,cex=2)
 #text(800,8,"A",cex=3,lwd=2)
@@ -249,13 +251,13 @@ lines(tempo_hora,CFU,type='l',col='black',pch = 20,lwd=2,cex=2)
 reg<-lm(UFC~CFU)
 par(xpd=F)
 par(mar = c(5, 5, 1, 1))
-plot(UFC,CFU,ylab='Observed log(CFU/g)',xlab='Predicted log(CFU/g)',col='black',pch=20,lwd=2,cex=2,cex.axis=1.5,cex.lab=2)
+plot(UFC,CFU,ylab='Observed log(CFU/g)',xlab='Predicted log(CFU/g)',col='black',pch=20,lwd=2,cex=2,cex.axis=1,cex.lab=1.5)
 abline(reg, col="black",lwd=2)
 mylabel = bquote(italic(R)^2 == .(format('0.967', digits = 3)))
 text(x = 4.5, y = 8, labels = mylabel)
 text(4.5,7.5,c('y= -0.34+1.05'))
 
-
+dev.off()
 
 ##Intervalos de confian?a
 
@@ -498,28 +500,32 @@ for (i in 2:20){
 }
 
 RMSE2=sqrt(sum((UFC2-CFU2)^2)/20)
+
+tiff(file=here("Figura","validacao.tiff"), height = 4, width = 7, units = 'in', res=300)
 par(mfrow=c(1,2))
-par(mar=c(5,5,1,1))
+par(mar=c(5,5,1,0.5))
 plot(tempo_hora2,UFC2,xlim=c(0,1200),ylim=c(1,7.5), ylab='log(CFU/g)',xlab='Time (hours)',col = "black", 
-     pch = 20,cex=2,cex.axis=1.5,cex.lab=2)
+     pch = 20,cex=2,cex.axis=1,cex.lab=1.5)
 lines(tempo_hora2,CFU2,type='l',col='black',pch = 20,lwd=2)
 #text(1000,6,"B",lwd=2,cex=3)
 
 
 reg2<-lm(UFC2~CFU2)
+
 par(mar=c(5,5,1,1))
 plot(UFC2,CFU2,ylab='Observed log(CFU/g)',xlab='Predicted log(CFU/g)',col='black',
-     pch = 20,cex=2,cex.axis=1.5,cex.lab=2)
+     pch = 20,cex=2,cex.axis=1,cex.lab=1.5)
 par(xpd=F)
 abline(reg2, col="black",lwd=2)
 mylabel = bquote(italic(R)^2 == .(format('0.9176', digits = 3)))
 text(x = 3.5, y = 7, labels = mylabel)
 text(3.5,6.5,c('y= -0.4+1.073'))
-
+dev.off()
 
 
 
 ##Extra plots
+tiff(file=here("Figura","environment1.tiff"), height = 4, width = 6, units = 'in', res=300)
 par(xpd=TRUE)
 corners = par("usr")
 par(mar = c(4, 5, 3, 7))
@@ -529,7 +535,10 @@ lines(tempo_hora,gama_ph,lty=4,lwd=2)
 lines(tempo_hora,gama_t,lty=5,lwd=2)
 legend(1070,1,inset=c(-0.2,0), c(expression(xi),'Aw','pH','T'), cex=1.5, lty=c(1,3,4,5), title=" ",bty = 'n',lwd=2)
 #text(x= corners[3]-200, y = (corners[4])+0.085,'A',cex = 2.5)
+dev.off()
 
+
+tiff(file=here("Figura","environment2.tiff"), height = 4, width = 6, units = 'in', res=300)
 par(xpd=TRUE)
 corners = par("usr")
 par(mar = c(4, 5, 3, 7))
@@ -539,7 +548,7 @@ lines(tempo_hora2,gama_ph2,lty=4,lwd=2)
 lines(tempo_hora2,gama_t2,lty=5,lwd=2)
 legend(1270,1,inset=c(-0.2,0), c(expression(xi),'Aw','pH','T'), cex=1.5, lty=c(1,3,4,5), title=" ",bty = 'n',lwd=2)
 #text(x= corners[3]-200, y = (corners[4])+0.085,'B',cex=2.5)
-
+dev.off()
 
 
 
@@ -584,6 +593,9 @@ perc2_5[i]<-quantile(CFU3[i,],0.025)
 perc97_5[i]<-quantile(CFU3[i,],0.975)
 }
 
+
+
+tiff(file=here("Figura","estocastico.tiff"), height = 4, width = 6, units = 'in', res=300)
 par(xpd=NA)
 par(mar = c(5, 5, 1, 1))
 plot(tempo_hora,media,xlim=c(0,1000),ylim=c(-5,4), ylab='log(CFU/g)',xlab='Time (hours)',col = "black", 
@@ -591,7 +603,10 @@ plot(tempo_hora,media,xlim=c(0,1000),ylim=c(-5,4), ylab='log(CFU/g)',xlab='Time 
 lines(tempo_hora,perc2_5,pch = 20,lwd=2,lty=2)
 lines(tempo_hora,perc97_5,pch = 20,lwd=2,lty=2)
 #legend(1070,4,inset=c(-0.2,0), c('2.5%','Mean','97.5%'), cex=0.8, lty=c(2,1,2), title=" ",bty = 'n',lwd=2,xpd=TRUE)
-
 abline(h=0,xpd=FALSE)
+
+dev.off()
+
+save.image(file=here("Resultado" ,"modelo.RData"))
 
 
