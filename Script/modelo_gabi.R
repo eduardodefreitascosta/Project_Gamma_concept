@@ -1,19 +1,20 @@
 #########################
-#######Modelo Gabi#######
+#######General model#####
 #########################
 
-###Vetores de tempo
+###Time vector
 tempo_hora<-c(0,4,8,16,21,29,42,54,66,78,88,102,140,188,245,307,379,454,523,643,715,837,941)
 delta<-c(0,4,4,8,5,8,13,12,12,12,10,14,38,48,57,62,72,75,69,120,72,122,104)
 length(tempo_hora)
 length(delta)
-###Vetor de Log10 UFC observado
+###Vetor of Log10 UFC observed
 
-UFC<-c(7.095810988,7.659378483,7.660246366,8.313832357,8.333019113,8.240877032,8.256059775,8.200465326,8.166984212,
-       8.143855305,8.112755705,8.287416353,8.256511737,6.967132647,6.877658539,6.460341676,5.886811163,5.173619004,
-       4.871754036,4.562146084,4.223370944,3.658713137,3.375805848)
+
+UFC<-as.numeric(log10(summary(mcmc1)$quantiles)[,3])
+
+
 length(UFC)
-###Importando dados de ambiente
+###Environmental data
 
 ph<-c(6.693333,6.700000,6.486667,6.126667,5.955000,5.791667,5.688333,5.551667,5.400000,5.630000,5.058333,5.176667,5.646667,5.646667,
 6.005000,5.386667,5.706667,5.510000,6.298333,5.610000,5.780000,5.800000,5.831667)
@@ -27,8 +28,8 @@ length(ph)
 length(aw)
 length(tem)
 
-##Parametros do ambiente para crescimento
-###Set parametros de crescimento
+##Environmental parameters for growth 
+###Set parameters for growth
 ph_max<-10.42
 ph_min<-3.58
 ph_opt<-7
@@ -40,7 +41,7 @@ t_min<-5.06
 t_opt<-39.3
 
 
-##Gamma e fi pH
+##Gamma and fi pH
 
 gama_ph<-as.numeric()
 fi_ph<-as.numeric()
@@ -56,7 +57,7 @@ for (i in 1:23){
         fi_ph[i]<-(1-gama_ph[i])^3
 }
 
-##Gama e fi atividade de agua  
+##Gama and fi Aw 
   
 gama_aw<-as.numeric()
 fi_aw<-as.numeric()
@@ -75,7 +76,7 @@ for (i in 1:23){
   fi_aw[i]<-(1-gama_aw[i])^3
 }
 
-##Gamma e fi temperatura
+##Gamma and fi temperature
 
 gama_t<-as.numeric()
 fi_t<-as.numeric()
@@ -96,7 +97,7 @@ fi_t[i]<-(1-sqrt(gama_t[i]))^3
 
 
 
-##Xi zeta e interação
+##Xi zeta and interaction
 
 psi<-as.numeric()
 
@@ -131,8 +132,8 @@ gama_zeta[i]<-gama_ph[i]*gama_aw[i]*gama_t[i]*zeta[i]
 
 
 
-####Parametros do ambiente para inativação
-###Set parametros de inativação
+####Environment parameters for inactivation
+###Set parameters for inactivation
 
 Z_ph1<-(-2.3)
 Z_ph2<-(-2.38)
@@ -181,7 +182,7 @@ if (tem[i]<=t_c){
 
 }
 
-#Modelagem
+#Modeling
 
 CFU<-as.numeric()
 CFU[1]<-UFC[1]
@@ -210,7 +211,7 @@ for (i in 2:23){
  return( sum((UFC-CFU)^2))
 }
 
-#Otimizacao
+#Optimization
 inici=c(3.6,0.2,6,39)
 fit=try(nlm(modelo,inici,hessian=TRUE))
 
@@ -248,19 +249,19 @@ lines(tempo_hora,CFU,type='l',col='black',pch = 20,lwd=2,cex=2)
 
 
 
-reg<-lm(UFC~CFU)
+summary(lm(UFC~CFU)->reg)
+
 par(xpd=F)
 par(mar = c(5, 5, 1, 1))
 plot(UFC,CFU,ylab='Observed log(CFU/g)',xlab='Predicted log(CFU/g)',col='black',pch=20,lwd=2,cex=2,cex.axis=1,cex.lab=1.5)
 abline(reg, col="black",lwd=2)
-mylabel = bquote(italic(R)^2 == .(format('0.967', digits = 3)))
+mylabel = bquote(italic(R)^2 == .(format(summary(reg)$r.squared, digits = 3)))
 text(x = 4.5, y = 8, labels = mylabel)
-text(4.5,7.5,c('y= -0.34+1.05'))
+text(4.5,7.5,paste("y=", round(reg$coefficients[1],2),"+",round(reg$coefficients[2],2),"x",sep=""))
 
 dev.off()
 
-##Intervalos de confian?a
-
+##Confidence intervals
 error<-sqrt(diag(solve(fit$hessian)))
 
 
@@ -286,7 +287,7 @@ kable(Intervalos,digits = 3,align = 'c')
 
 
 ############################
-# Analise de sensibilidade #
+# Validation model         #
 ############################
 tempo_hora2<-c(0,4,8,14,20,26,33,40.5,64.5,89.5,161.5,233.5,305.5,353.5,425.5,521.5,689.5,809.5,1001.5,1121.5)
 delta2<-numeric()
@@ -294,19 +295,15 @@ delta2[1]<-0
 for(i in 2: length(tempo_hora2))
 delta2[i]<-tempo_hora2[i]-tempo_hora2[i-1]
 
-UFC2<-c(6.836765909,6.417383185,6.415412014,6.604785063,7.056801123,7.379198572,7.265907878,7.208778583,
-7.019579637,6.992571499,6.682268214,6.199567189,5.282010673,5.393627883,5.139824895,4.787727592,3.441734324,
-3.363568304,2.264423854,1.821826812)
+
+UFC2<-as.numeric(log10(summary(mcmc2)$quantiles)[,3])
+  
+
 
 ph2<-c(6.50600, 6.41000,6.42400,6.31400, 6.10000, 5.75400, 5.65400,5.29400,6.14400,
        5.15200, 5.09200,5.03600,5.32200,5.68500,5.38167,5.59000,5.38667,5.80667,
        5.77667,6.06333)
 
-
-#aw2<-c(0.955000,0.954208,0.953416,0.952230,0.951046,0.949863,0.948485,0.947010,
- #     0.942307,0.937433,0.923535,0.909844,0.896356, 0.887475,0.874318,
-#      0.857078, 0.827723,  0.807373,0.761835, 0.796732)
-      
 aw2<-0.955*exp(-tempo_hora2*0.000203620182165236)
 
 
@@ -319,8 +316,8 @@ length(aw2)
 length(tem2)
 length(delta2)
 
-##Parametros do ambiente para crescimento
-###Set parametros de crescimento
+##Environmental parameters for growth
+###Set parameters for growth
 ph_max<-10.42
 ph_min<-3.58
 ph_opt<-7
@@ -332,7 +329,7 @@ t_min<-5.06
 t_opt<-39.3
 
 
-##Gamma e fi pH
+##Gamma and fi pH
 
 gama_ph2<-as.numeric()
 fi_ph2<-as.numeric()
@@ -348,7 +345,7 @@ for (i in 1:20){
   fi_ph2[i]<-(1-gama_ph2[i])^3
 }
 
-##Gama e fi atividade de agua  
+##Gama and fi Aw
 
 gama_aw2<-as.numeric()
 fi_aw2<-as.numeric()
@@ -367,7 +364,7 @@ for (i in 1:20){
   fi_aw2[i]<-(1-gama_aw2[i])^3
 }
 
-##Gamma e fi temperatura
+##Gamma and fi temperature
 
 gama_t2<-as.numeric()
 fi_t2<-as.numeric()
@@ -388,7 +385,7 @@ for (i in 1:20){
 
 
 
-##Xi zeta e interação
+##Xi zeta and interação
 
 psi2<-as.numeric()
 
@@ -423,8 +420,8 @@ for(i in 1:20){
 
 
 
-####Parametros do ambiente para inativação
-###Set parametros de inativação
+####Environment parameters for inactivation
+###Set parameters for inactivation
 
 Z_ph1<-(-2.3)
 Z_ph2<-(-2.38)
@@ -438,7 +435,7 @@ t_ast<-12
 t_c<-22
 t_opt_reduc<-10.5
 
-##Parametro da weibull fixo
+##Fix Weibull parameters
 p<-2.27
 
 ##Lambdas
@@ -473,7 +470,7 @@ for(i in 1:20){
   
 }
 
-#Modelagem
+#Modeling
 
 ##Plot
 
@@ -504,22 +501,23 @@ RMSE2=sqrt(sum((UFC2-CFU2)^2)/20)
 tiff(file=here("Figura","validacao.tiff"), height = 4, width = 7, units = 'in', res=300)
 par(mfrow=c(1,2))
 par(mar=c(5,5,1,0.5))
-plot(tempo_hora2,UFC2,xlim=c(0,1200),ylim=c(1,7.5), ylab='log(CFU/g)',xlab='Time (hours)',col = "black", 
+plot(tempo_hora2,UFC2,xlim=c(0,1200),ylim=c(min(UFC2),max(UFC2)), ylab='log(CFU/g)',xlab='Time (hours)',col = "black", 
      pch = 20,cex=2,cex.axis=1,cex.lab=1.5)
 lines(tempo_hora2,CFU2,type='l',col='black',pch = 20,lwd=2)
 #text(1000,6,"B",lwd=2,cex=3)
 
 
-reg2<-lm(UFC2~CFU2)
+summary(lm(UFC2~CFU2)->reg2)
 
 par(mar=c(5,5,1,1))
 plot(UFC2,CFU2,ylab='Observed log(CFU/g)',xlab='Predicted log(CFU/g)',col='black',
      pch = 20,cex=2,cex.axis=1,cex.lab=1.5)
 par(xpd=F)
 abline(reg2, col="black",lwd=2)
-mylabel = bquote(italic(R)^2 == .(format('0.9176', digits = 3)))
-text(x = 3.5, y = 7, labels = mylabel)
-text(3.5,6.5,c('y= -0.4+1.073'))
+mylabel = bquote(italic(R)^2 == .(format(summary(reg2)$r.squared, digits = 3)))
+text(x = 4.2, y = 8, labels = mylabel)
+text(4.5 ,7.5,paste("y=", round(reg2$coefficients[1],2),"+",round(reg2$coefficients[2],2),"x",sep=""))
+
 dev.off()
 
 
@@ -554,7 +552,7 @@ dev.off()
 
 
 ######################
-##Modelo estocastico##
+##Statistical model ##
 ######################
 
 
@@ -607,6 +605,25 @@ abline(h=0,xpd=FALSE)
 
 dev.off()
 
+
+#Save the final model
 save.image(file=here("Resultado" ,"modelo.RData"))
 
 
+###Observed values in the Bayesian analysis
+
+write.table(
+cbind(
+log10(summary(mcmc1)$statistics[,1]),
+log10(summary(mcmc1)$quantiles[,c(1,3,5)])
+),here("Resultado","bayes_out1.txt")
+
+)
+
+write.table(
+cbind(
+  log10(summary(mcmc2)$statistics[,1]),
+  log10(summary(mcmc2)$quantiles[,c(1,3,5)])
+),here("Resultado","bayes_out2.txt")
+
+)
