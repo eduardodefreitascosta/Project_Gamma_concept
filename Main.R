@@ -4,6 +4,8 @@ if(!require(here)){
 }
 library(here)
 
+dir.create(here("Figura"))
+dir.create(here("Resultado"))
 
 
 source(here("Dados","data.R"))
