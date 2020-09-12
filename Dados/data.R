@@ -1,4 +1,5 @@
 
+library(here)
 
 ##Fitting model data
 placa1<-c(136,45,57,228,211,212,175,168,150,150,175,202,290,65,52,76,82,67,75,396,282,103,54,136,70,42,210,243,131,212,156,175,127,148,216,125,52,109,280,106,154,
@@ -15,7 +16,7 @@ d<-c(0.0001,1.00E-05,1.00E-05,1.00E-05,1.00E-05,1.00E-05,1.00E-05,1.00E-05,
      1.00E-05,1.00E-05,1.00E-05,1.00E-05,1.00E-05,1.00E-04,1.00E-03,1.00E-03,
      1.00E-03,1.00E-02,1.00E-02,1.00E-01,1.00E-01,1.00E-01)
 
-sal<-cbind.data.frame(placa1,placa2,d)
+sal<-cbind.data.frame(c(rep(1,23),rep(2,23)),placa1,placa2,d)
 
 
 #Validation data
@@ -29,5 +30,9 @@ d<-c(1.00E-05,1.00E-05,1.00E-04,1.00E-05,1.00E-05,1.00E-05,1.00E-05,1.00E-05,
      1.00E-05,1.00E-05,1.00E-04,1.00E-04,1.00E-03,1.00E-04,1.00E-03,1.00E-03,
      1.00E-02,1.00E-01,1.00E-01,1.00E-01)
 
-sal1<-cbind.data.frame(placa1,placa2,d)
+sal1<-cbind.data.frame(c(rep(1,20)),placa1,placa2,d)
 
+##Exporting to csv
+
+write.csv(sal,here("Resultado","sal1.csv"))
+write.csv(sal1,here("Resultado","sal2.csv"))

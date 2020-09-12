@@ -6,8 +6,6 @@
 /Figura
 /Resultado
 .Rmd
-/Script/gabi_semina.R
-/Script/gabi.Rmd
-/Script/gabi2.Rmd
-/Script/gabi3.Rmd
+Script/gabi_semina.R
+*.Rmd
 /Paper
