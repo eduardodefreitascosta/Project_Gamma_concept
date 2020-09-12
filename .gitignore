@@ -7,5 +7,7 @@
 /Resultado
 .Rmd
 Script/gabi_semina.R
+Script/gabi_semina.r
 *.Rmd
+*.rmd
 /Paper
