@@ -32,6 +32,7 @@ d<-c(1.00E-05,1.00E-05,1.00E-04,1.00E-05,1.00E-05,1.00E-05,1.00E-05,1.00E-05,
 
 sal1<-cbind.data.frame(c(rep(1,20)),placa1,placa2,d)
 
+
 ##Exporting to csv
 
 write.csv(sal,here("Resultado","sal1.csv"))
