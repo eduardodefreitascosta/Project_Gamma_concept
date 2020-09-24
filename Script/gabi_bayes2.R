@@ -51,7 +51,7 @@ burn = 1000;nsim = 1000000;nthin = 250
 
 # Defining the data as a list
 dadosjags1 = list(d=(sal1$d), 
-                  Y = array(cbind(sal1$placa1, sal1$placa2), dim=c(23,2)))
+                  Y = array(cbind(sal1$placa1, sal1$placa2), dim=c(20,2)))
 
 parms = c("N")
 
@@ -68,5 +68,5 @@ mcmc2 <- coda.samples(m1, parms, n.iter=nsim,thin=nthin)
 #plot(mcmc2)
 #effectiveSize(mcmc2)
 #autocorr.diag(mcmc2)
-#summary(mcmc2)
+summary(mcmc2)
 #gelman.plot(mcmc2)

@@ -612,18 +612,18 @@ save.image(file=here("Resultado" ,"modelo.RData"))
 
 ###Observed values in the Bayesian analysis
 
-write.table(
+write.csv(
 cbind(
 log10(summary(mcmc1)$statistics[,1]),
 log10(summary(mcmc1)$quantiles[,c(1,3,5)])
-),here("Resultado","bayes_out1.txt")
+),here("Resultado","bayes_out1.csv")
 
 )
 
-write.table(
+write.csv(
 cbind(
   log10(summary(mcmc2)$statistics[,1]),
   log10(summary(mcmc2)$quantiles[,c(1,3,5)])
-),here("Resultado","bayes_out2.txt")
+),here("Resultado","bayes_out2.csv")
 
 )
