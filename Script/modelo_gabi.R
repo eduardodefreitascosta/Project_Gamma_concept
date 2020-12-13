@@ -236,28 +236,52 @@ for (i in 2:23){
   
 }
 
-tiff(file=here("Figura","modelo.tiff"), height = 4, width = 7, units = 'in', res=300)
 
-par(mfrow=c(1,2))
-par(xpd=FALSE)
-par(mar = c(5, 5, 1, 1))
-plot(tempo_hora,UFC,xlim=c(0,1000),ylim=c(3,9), ylab='log(CFU/g)',xlab='Time (hours)',col = "black", 
-     pch = 20,lwd=2,cex.lab=1.5,cex.axis=1,cex=2)
-par(xpd=FALSE)
-lines(tempo_hora,CFU,type='l',col='black',pch = 20,lwd=2,cex=2)
-#text(800,8,"A",cex=3,lwd=2)
 
+theme_set(theme_minimal())
+p1<-ggplot()+
+  geom_point(aes(x=tempo_hora,y=UFC),size=2)+
+  geom_line(aes(x=tempo_hora,y=CFU),size=1)+
+  labs(title= "A",
+       y='log(CFU/g)', x = 'Time(hours)')+
+  
+  theme(axis.text.x = element_text(colour = 'black', size = 20),
+        axis.title.x=element_text(size = 20, 
+                                  hjust = 0.5, vjust = 0.2),axis.title = element_text(size = 20)) +
+  
+  theme(axis.text.y = element_text(colour = 'black', size = 20), 
+        axis.title.y = element_text(size = 20, 
+                                    hjust = 0.5, vjust = 3),axis.title = element_text(size = 20)) +
+  theme(text = element_text(size = 20))+
+  theme(plot.margin = margin(0.2, 0.2, 0.2, 0.3, "cm"))
 
 
 summary(lm(UFC~CFU)->reg)
 
-par(xpd=F)
-par(mar = c(5, 5, 1, 1))
-plot(UFC,CFU,ylab='Observed log(CFU/g)',xlab='Predicted log(CFU/g)',col='black',pch=20,lwd=2,cex=2,cex.axis=1,cex.lab=1.5)
-abline(reg, col="black",lwd=2)
-mylabel = bquote(italic(R)^2 == .(format(summary(reg)$r.squared, digits = 3)))
-text(x = 4.5, y = 8, labels = mylabel)
-text(4.5,7.5,paste("y=", round(reg$coefficients[1],2),"+",round(reg$coefficients[2],2),"x",sep=""))
+p2<-ggplot()+
+  geom_point(aes(x=UFC,y=CFU),size=2)+
+  geom_abline(intercept = reg$coefficients[1], slope = reg$coefficients[2],size=1)+
+  labs(title= "B",
+       y='Observed log(CFU/g)', x = 'Predicted log(CFU/g)')+
+  
+  theme(axis.text.x = element_text(colour = 'black', size = 20),
+        axis.title.x=element_text(size = 20, 
+                                  hjust = 0.5, vjust = 0.2),axis.title = element_text(size = 20)) +
+  
+  theme(axis.text.y = element_text(colour = 'black', size = 20), 
+        axis.title.y = element_text(size = 20, 
+                                    hjust = 0.5, vjust = 3),axis.title = element_text(size = 20)) +
+  theme(text = element_text(size = 20))+
+  annotate(geom="text", x=5, y=8, label=paste("y=", round(reg$coefficients[1],2),"+",round(reg$coefficients[2],2),"x",sep=""),
+           color="black",size=5)+
+  annotate(geom="text",x=5,y=7.5,label=bquote(italic(R)^2 == .(format(summary(reg)$r.squared, digits = 3))),size=5)+
+  theme(plot.margin = margin(0.2, 0.2, 0.2, 0.2, "cm"))
+
+
+tiff(file=here("Figura","modelo.tiff"), height = 4, width = 7, units = 'in', res=300)
+
+grid.arrange(p1, p2, widths = c(0.5, 0.5),layout_matrix = rbind(c(1, 2),
+                                                                c(1, 2)))
 
 dev.off()
 
@@ -498,54 +522,120 @@ for (i in 2:20){
 
 RMSE2=sqrt(sum((UFC2-CFU2)^2)/20)
 
-tiff(file=here("Figura","validacao.tiff"), height = 4, width = 7, units = 'in', res=300)
-par(mfrow=c(1,2))
-par(mar=c(5,5,1,0.5))
-plot(tempo_hora2,UFC2,xlim=c(0,1200),ylim=c(min(UFC2),max(UFC2)), ylab='log(CFU/g)',xlab='Time (hours)',col = "black", 
-     pch = 20,cex=2,cex.axis=1,cex.lab=1.5)
-lines(tempo_hora2,CFU2,type='l',col='black',pch = 20,lwd=2)
-#text(1000,6,"B",lwd=2,cex=3)
+
+
+theme_set(theme_minimal())
+p3<-ggplot()+
+  geom_point(aes(x=tempo_hora2,y=UFC2),size=2)+
+  geom_line(aes(x=tempo_hora2,y=CFU2),size=1)+
+  labs(title= "A",
+       y='log(CFU/g)', x = 'Time(hours)')+
+  
+  theme(axis.text.x = element_text(colour = 'black', size = 20),
+        axis.title.x=element_text(size = 20, 
+                                  hjust = 0.5, vjust = 0.2),axis.title = element_text(size = 20)) +
+  
+  theme(axis.text.y = element_text(colour = 'black', size = 20), 
+        axis.title.y = element_text(size = 20, 
+                                    hjust = 0.5, vjust = 3),axis.title = element_text(size = 20)) +
+  theme(text = element_text(size = 20))+
+  theme(plot.margin = margin(0.2, 0.2, 0.2, 0.3, "cm"))
+
 
 
 summary(lm(UFC2~CFU2)->reg2)
 
-par(mar=c(5,5,1,1))
-plot(UFC2,CFU2,ylab='Observed log(CFU/g)',xlab='Predicted log(CFU/g)',col='black',
-     pch = 20,cex=2,cex.axis=1,cex.lab=1.5)
-par(xpd=F)
-abline(reg2, col="black",lwd=2)
-mylabel = bquote(italic(R)^2 == .(format(summary(reg2)$r.squared, digits = 3)))
-text(x = 4.2, y = 8, labels = mylabel)
-text(4.5 ,7.5,paste("y=", round(reg2$coefficients[1],2),"+",round(reg2$coefficients[2],2),"x",sep=""))
+p4<-ggplot()+
+  geom_point(aes(x=UFC2,y=CFU2),size=2)+
+  geom_abline(intercept = reg2$coefficients[1], slope = reg2$coefficients[2],size=1)+
+  labs(title= "B",
+       y='Observed log(CFU/g)', x = 'Predicted log(CFU/g)')+
+  
+  theme(axis.text.x = element_text(colour = 'black', size = 20),
+        axis.title.x=element_text(size = 20, 
+                                  hjust = 0.5, vjust = 0.2),axis.title = element_text(size = 20)) +
+  
+  theme(axis.text.y = element_text(colour = 'black', size = 20), 
+        axis.title.y = element_text(size = 20, 
+                                    hjust = 0.5, vjust = 3),axis.title = element_text(size = 20)) +
+  theme(text = element_text(size = 20))+
+  annotate(geom="text", x=4, y=7, label=paste("y=", round(reg2$coefficients[1],2),"+",round(reg2$coefficients[2],2),"x",sep=""),
+           color="black",size=5)+
+  annotate(geom="text",x=4,y=6.5,label=bquote(italic(R)^2 == .(format(summary(reg2)$r.squared, digits = 3))),size=5)+
+  theme(plot.margin = margin(0.2, 0.2, 0.2, 0.2, "cm"))
+
+
+tiff(file=here("Figura","validacao.tiff"), height = 4, width = 7, units = 'in', res=300)
+
+grid.arrange(p3, p4, widths = c(0.5, 0.5),layout_matrix = rbind(c(1, 2),
+                                                                c(1, 2)))
 
 dev.off()
 
 
 
 ##Extra plots
+
+env1<-cbind.data.frame( rep(tempo_hora,4),c(zeta,gama_aw,gama_ph,gama_t),
+                        c(rep("z",23),rep("aw",23),rep("ph",23),rep("t",23)))
+
+colnames(env1)<-c("time","value","factor")
+
 tiff(file=here("Figura","environment1.tiff"), height = 4, width = 6, units = 'in', res=300)
-par(xpd=TRUE)
-corners = par("usr")
-par(mar = c(4, 5, 3, 7))
-plot(tempo_hora,zeta,type='l',xlim=c(0,1000),ylim=c(0,1),ylab=expression(paste(gamma[x],(x[i]))),xlab='Time (hours)',lwd=2,cex.axis=1.5,cex.lab=2)
-lines(tempo_hora,gama_aw,lty=3,lwd=2)
-lines(tempo_hora,gama_ph,lty=4,lwd=2)
-lines(tempo_hora,gama_t,lty=5,lwd=2)
-legend(1070,1,inset=c(-0.2,0), c(expression(xi),'Aw','pH','T'), cex=1.5, lty=c(1,3,4,5), title=" ",bty = 'n',lwd=2)
-#text(x= corners[3]-200, y = (corners[4])+0.085,'A',cex = 2.5)
+
+ggplot(env1,aes(x=time,y=value,group=factor))+
+  geom_line(aes(linetype=factor),size=1.5)+
+    labs( y=expression(paste(gamma[x],(x[i]))), x = 'Time (hours)')+
+    
+  scale_linetype_manual(values = c("solid","dashed", "dotted","dotdash"),
+                        labels = c('Aw','pH','T',expression(xi)),
+                        name="")+
+  scale_size_manual(values=c(1.5,1.5,1.5,1.5),guide=F)+
+  theme(legend.key.width = unit(2,"cm"))+
+  
+  theme(axis.text.x = element_text(colour = 'black', size = 20),
+        axis.title.x=element_text(size = 20, 
+                                  hjust = 0.5, vjust = 0.2),axis.title = element_text(size = 20)) +
+  
+  theme(axis.text.y = element_text(colour = 'black', size = 20), 
+        axis.title.y = element_text(size = 20, 
+                                    hjust = 0.5, vjust = 3),axis.title = element_text(size = 20)) +
+  
+  theme(text = element_text(size = 20))+
+  theme(plot.margin = margin(0.2, 0.3, 0.3, 0.3, "cm"))
+
 dev.off()
 
 
+env2<-cbind.data.frame( rep(tempo_hora2,4),c(zeta2,gama_aw2,gama_ph2,gama_t2),
+                        c(rep("z",20),rep("aw",20),rep("ph",20),rep("t",20)))
+
+colnames(env2)<-c("time","value","factor")
+
+
 tiff(file=here("Figura","environment2.tiff"), height = 4, width = 6, units = 'in', res=300)
-par(xpd=TRUE)
-corners = par("usr")
-par(mar = c(4, 5, 3, 7))
-plot(tempo_hora2,zeta2,type='l',xlim=c(0,1200),ylim=c(0,1),ylab=expression(paste(gamma[x],(x[i]))),xlab='Time (hours)',lwd=2,cex.axis=1.5,cex.lab=2)
-lines(tempo_hora2,gama_aw2,lty=3,lwd=2)
-lines(tempo_hora2,gama_ph2,lty=4,lwd=2)
-lines(tempo_hora2,gama_t2,lty=5,lwd=2)
-legend(1270,1,inset=c(-0.2,0), c(expression(xi),'Aw','pH','T'), cex=1.5, lty=c(1,3,4,5), title=" ",bty = 'n',lwd=2)
-#text(x= corners[3]-200, y = (corners[4])+0.085,'B',cex=2.5)
+
+ggplot(env2,aes(x=time,y=value,group=factor))+
+  geom_line(aes(linetype=factor),size=1.5)+
+  labs( y=expression(paste(gamma[x],(x[i]))), x = 'Time (hours)')+
+  
+  scale_linetype_manual(values = c("solid","dashed", "dotted","dotdash"),
+                        labels = c('Aw','pH','T',expression(xi)),
+                        name="")+
+  scale_size_manual(values=c(1.5,1.5,1.5,1.5),guide=F)+
+  theme(legend.key.width = unit(2,"cm"))+
+  
+  theme(axis.text.x = element_text(colour = 'black', size = 20),
+        axis.title.x=element_text(size = 20, 
+                                  hjust = 0.5, vjust = 0.2),axis.title = element_text(size = 20)) +
+  
+  theme(axis.text.y = element_text(colour = 'black', size = 20), 
+        axis.title.y = element_text(size = 20, 
+                                    hjust = 0.5, vjust = 3),axis.title = element_text(size = 20)) +
+  
+  theme(text = element_text(size = 20))+
+  theme(plot.margin = margin(0.2, 0.3, 0.3, 0.3, "cm"))
+
 dev.off()
 
 
@@ -591,17 +681,34 @@ perc2_5[i]<-quantile(CFU3[i,],0.025)
 perc97_5[i]<-quantile(CFU3[i,],0.975)
 }
 
+stoc<-cbind.data.frame(rep(tempo_hora,3),c(media,perc2_5,perc97_5),
+                       c(rep("mean",23),rep("lower",23),rep("upper",23)))
+
+
+colnames(stoc)<-c("time","value","stat")
 
 
 tiff(file=here("Figura","estocastico.tiff"), height = 4, width = 6, units = 'in', res=300)
-par(xpd=NA)
-par(mar = c(5, 5, 1, 1))
-plot(tempo_hora,media,xlim=c(0,1000),ylim=c(-5,4), ylab='log(CFU/g)',xlab='Time (hours)',col = "black", 
-     pch = 20,lwd=2,cex.lab=2,cex.axis=1.5,type='l')
-lines(tempo_hora,perc2_5,pch = 20,lwd=2,lty=2)
-lines(tempo_hora,perc97_5,pch = 20,lwd=2,lty=2)
-#legend(1070,4,inset=c(-0.2,0), c('2.5%','Mean','97.5%'), cex=0.8, lty=c(2,1,2), title=" ",bty = 'n',lwd=2,xpd=TRUE)
-abline(h=0,xpd=FALSE)
+
+ggplot(stoc,aes(x=time,y=value,group=stat))+
+  geom_line(aes(linetype=stat),size=1.5)+
+  labs( y="log(CFU/g)", x = 'Time (hours)')+
+  
+  scale_linetype_manual(values = c("dashed","solid", "dashed"),
+                        name="")+
+  scale_size_manual(values=c(1.5,1.5,1.5),guide=F)+
+  theme(legend.position="none")+
+  
+  theme(axis.text.x = element_text(colour = 'black', size = 20),
+        axis.title.x=element_text(size = 20, 
+                                  hjust = 0.5, vjust = 0.2),axis.title = element_text(size = 20)) +
+  
+  theme(axis.text.y = element_text(colour = 'black', size = 20), 
+        axis.title.y = element_text(size = 20, 
+                                    hjust = 0.5, vjust = 3),axis.title = element_text(size = 20)) +
+  
+  theme(text = element_text(size = 20))+
+  theme(plot.margin = margin(0.2, 0.3, 0.3, 0.3, "cm"))
 
 dev.off()
 
