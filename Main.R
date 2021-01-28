@@ -15,6 +15,10 @@ if(!require(gridExtra)){
 }
 library(gridExtra)
 
+if(!require(knitr)){
+  install.packages("knitr")
+}
+library(knitr)
 
 
 dir.create(here("Figura"))
