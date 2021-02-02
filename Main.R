@@ -1,34 +1,29 @@
 
-if(!require(here)){
-  install.packages("here")
+#Install packages
+
+#Packages to be used
+packages<-c("readxl","here","tidyverse","ggplot2","gridExtra","knitr","BRugs","coda","rjags")
+
+
+# Install packages not yet installed
+installed_packages <- packages %in% rownames(installed.packages())
+if (any(installed_packages == FALSE)) {
+  install.packages(packages[!installed_packages])
 }
-library(here)
 
 
-if(!require(ggplot2)){
-  install.packages("ggplot2")
-}
-library(ggplot2)
+# Packages loading
+invisible(lapply(packages, library, character.only = TRUE))
 
-if(!require(gridExtra)){
-  install.packages("gridextra")
-}
-library(gridExtra)
+#Create Dir.
+dir.create(here("Figure"))
+dir.create(here("Results"))
 
-if(!require(knitr)){
-  install.packages("knitr")
-}
-library(knitr)
+#Run scripts
+source(here("Data","data.R"))
 
+source(here("Script","bayes1.R"))
 
-dir.create(here("Figura"))
-dir.create(here("Resultado"))
+source(here("Script","bayes2.R"))
 
-
-source(here("Dados","data.R"))
-
-source(here("Script","gabi_bayes1.R"))
-
-source(here("Script","gabi_bayes2.R"))
-
-source(here("Script","modelo_gabi.R"))
+source(here("Script","model.R"))
