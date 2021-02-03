@@ -292,12 +292,6 @@ p2<-ggplot()+
   theme(plot.margin = margin(0.2, 0.2, 0.2, 0.2, "cm"))
 
 
-tiff(file=here("Figure","model.tiff"), height = 4, width = 7, units = 'in', res=300)
-
-grid.arrange(p1, p2, widths = c(0.5, 0.5),layout_matrix = rbind(c(1, 2),
-                                                                c(1, 2)))
-
-dev.off()
 
 ##Confidence intervals
 error<-sqrt(diag(solve(fit$hessian)))
@@ -595,13 +589,6 @@ p4<-ggplot()+
   theme(plot.margin = margin(0.2, 0.2, 0.2, 0.2, "cm"))
 
 
-tiff(file=here("Figure","validation.tiff"), height = 4, width = 7, units = 'in', res=300)
-
-grid.arrange(p3, p4, widths = c(0.5, 0.5),layout_matrix = rbind(c(1, 2),
-                                                                c(1, 2)))
-
-dev.off()
-
 
 
 ##Extra plots
@@ -777,3 +764,23 @@ cbind(
 ),here("Results","bayes_out2.csv")
 
 )
+
+
+
+
+#log10CFU graphs
+tiff(file=here("Figure","model.tiff"), height = 4, width = 7, units = 'in', res=300)
+
+grid.arrange(p1, p2, widths = c(0.5, 0.5),layout_matrix = rbind(c(1, 2),
+                                                                c(1, 2)))
+
+dev.off()
+
+
+tiff(file=here("Figure","validation.tiff"), height = 4, width = 7, units = 'in', res=300)
+
+grid.arrange(p3, p4, widths = c(0.5, 0.5),layout_matrix = rbind(c(1, 2),
+                                                                c(1, 2)))
+
+dev.off()
+
