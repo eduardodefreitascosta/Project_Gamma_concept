@@ -2,6 +2,7 @@
 #######General model#####
 #########################
 
+theme_set(theme_minimal())
 ###Time vector
 tempo_hora<-c(0,4,8,16,21,29,42,54,66,78,88,102,140,188,245,307,379,454,523,643,715,837,941)
 delta<-c(0,4,4,8,5,8,13,12,12,12,10,14,38,48,57,62,72,75,69,120,72,122,104)
@@ -252,21 +253,21 @@ for (i in 2:23){
 
 
 
-theme_set(theme_minimal())
+
 p1<-ggplot()+
   geom_point(aes(x=tempo_hora,y=UFC),size=2)+
   geom_line(aes(x=tempo_hora,y=CFU),size=1)+
   labs(title= "A",
        y='log10(CFU/g)', x = 'Time(hours)')+
   
-  theme(axis.text.x = element_text(colour = 'black', size = 20),
-        axis.title.x=element_text(size = 20, 
-                                  hjust = 0.5, vjust = 0.2),axis.title = element_text(size = 20)) +
+  theme(axis.text.x = element_text(colour = 'black', size = 15),
+        axis.title.x=element_text(size = 15, 
+                                  hjust = 0.5, vjust = 0.2),axis.title = element_text(size = 15)) +
   
-  theme(axis.text.y = element_text(colour = 'black', size = 20), 
-        axis.title.y = element_text(size = 20, 
-                                    hjust = 0.5, vjust = 3),axis.title = element_text(size = 20)) +
-  theme(text = element_text(size = 20))+
+  theme(axis.text.y = element_text(colour = 'black', size = 15), 
+        axis.title.y = element_text(size = 15, 
+                                    hjust = 0.5, vjust = 3),axis.title = element_text(size = 15)) +
+  theme(text = element_text(size = 15))+
   theme(plot.margin = margin(0.2, 0.2, 0.2, 0.3, "cm"))
 
 
@@ -278,14 +279,14 @@ p2<-ggplot()+
   labs(title= "B",
        y='Observed log10(CFU/g)', x = 'Predicted log10(CFU/g)')+
   
-  theme(axis.text.x = element_text(colour = 'black', size = 20),
-        axis.title.x=element_text(size = 20, 
-                                  hjust = 0.5, vjust = 0.2),axis.title = element_text(size = 20)) +
+  theme(axis.text.x = element_text(colour = 'black', size = 15),
+        axis.title.x=element_text(size = 15, 
+                                  hjust = 0.5, vjust = 0.2),axis.title = element_text(size = 15)) +
   
-  theme(axis.text.y = element_text(colour = 'black', size = 20), 
-        axis.title.y = element_text(size = 20, 
-                                    hjust = 0.5, vjust = 3),axis.title = element_text(size = 20)) +
-  theme(text = element_text(size = 20))+
+  theme(axis.text.y = element_text(colour = 'black', size = 15), 
+        axis.title.y = element_text(size = 15, 
+                                    hjust = 0.5, vjust = 3),axis.title = element_text(size = 15)) +
+  theme(text = element_text(size = 15))+
   annotate(geom="text", x=5, y=8, label=paste("y=", round(reg$coefficients[1],2),"+",round(reg$coefficients[2],2),"x",sep=""),
            color="black",size=5)+
   annotate(geom="text",x=5,y=7.5,label=bquote(italic(R)^2 == .(format(summary(reg)$r.squared, digits = 3))),size=5)+
@@ -555,14 +556,14 @@ p3<-ggplot()+
   labs(title= "A",
        y='log10(CFU/g)', x = 'Time(hours)')+
   
-  theme(axis.text.x = element_text(colour = 'black', size = 20),
-        axis.title.x=element_text(size = 20, 
-                                  hjust = 0.5, vjust = 0.2),axis.title = element_text(size = 20)) +
+  theme(axis.text.x = element_text(colour = 'black', size = 15),
+        axis.title.x=element_text(size = 15, 
+                                  hjust = 0.5, vjust = 0.2),axis.title = element_text(size = 15)) +
   
-  theme(axis.text.y = element_text(colour = 'black', size = 20), 
-        axis.title.y = element_text(size = 20, 
-                                    hjust = 0.5, vjust = 3),axis.title = element_text(size = 20)) +
-  theme(text = element_text(size = 20))+
+  theme(axis.text.y = element_text(colour = 'black', size = 15), 
+        axis.title.y = element_text(size = 15, 
+                                    hjust = 0.5, vjust = 3),axis.title = element_text(size = 15)) +
+  theme(text = element_text(size = 15))+
   theme(plot.margin = margin(0.2, 0.2, 0.2, 0.3, "cm"))
 
 
@@ -575,14 +576,14 @@ p4<-ggplot()+
   labs(title= "B",
        y='Observed log10(CFU/g)', x = 'Predicted log10(CFU/g)')+
   
-  theme(axis.text.x = element_text(colour = 'black', size = 20),
-        axis.title.x=element_text(size = 20, 
-                                  hjust = 0.5, vjust = 0.2),axis.title = element_text(size = 20)) +
+  theme(axis.text.x = element_text(colour = 'black', size = 15),
+        axis.title.x=element_text(size = 15, 
+                                  hjust = 0.5, vjust = 0.2),axis.title = element_text(size = 15)) +
   
-  theme(axis.text.y = element_text(colour = 'black', size = 20), 
-        axis.title.y = element_text(size = 20, 
-                                    hjust = 0.5, vjust = 3),axis.title = element_text(size = 20)) +
-  theme(text = element_text(size = 20))+
+  theme(axis.text.y = element_text(colour = 'black', size = 15), 
+        axis.title.y = element_text(size = 15, 
+                                    hjust = 0.5, vjust = 3),axis.title = element_text(size = 15)) +
+  theme(text = element_text(size = 15))+
   annotate(geom="text", x=4, y=7, label=paste("y=", round(reg2$coefficients[1],2),"+",round(reg2$coefficients[2],2),"x",sep=""),
            color="black",size=5)+
   annotate(geom="text",x=4,y=6.5,label=bquote(italic(R)^2 == .(format(summary(reg2)$r.squared, digits = 3))),size=5)+
@@ -598,10 +599,10 @@ env1<-cbind.data.frame( rep(tempo_hora,4),c(zeta,gama_aw,gama_ph,gama_t),
 
 colnames(env1)<-c("time","value","factor")
 
-tiff(file=here("Figure","environment1.tiff"), height = 4, width = 6, units = 'in', res=300)
+tiff(file=here("Figure","Fig1.tiff"), height = 4, width = 8, units = 'in', res=300)
 
 ggplot(env1,aes(x=time,y=value,group=factor))+
-  geom_line(aes(linetype=factor),size=1.5)+
+  geom_line(aes(linetype=factor),size=1)+
     labs( y=expression(paste(gamma[x],(x[i]))), x = 'Time (hours)')+
     
   scale_linetype_manual(values = c("solid","dashed", "dotted","dotdash"),
@@ -610,15 +611,15 @@ ggplot(env1,aes(x=time,y=value,group=factor))+
   scale_size_manual(values=c(1.5,1.5,1.5,1.5),guide=F)+
   theme(legend.key.width = unit(2,"cm"))+
   
-  theme(axis.text.x = element_text(colour = 'black', size = 20),
-        axis.title.x=element_text(size = 20, 
-                                  hjust = 0.5, vjust = 0.2),axis.title = element_text(size = 20)) +
+  theme(axis.text.x = element_text(colour = 'black', size = 15),
+        axis.title.x=element_text(size = 15, 
+                                  hjust = 0.5, vjust = 0.2),axis.title = element_text(size = 15)) +
   
-  theme(axis.text.y = element_text(colour = 'black', size = 20), 
+  theme(axis.text.y = element_text(colour = 'black', size = 15), 
         axis.title.y = element_text(size = 20, 
-                                    hjust = 0.5, vjust = 3),axis.title = element_text(size = 20)) +
+                                    hjust = 0.5, vjust = 3),axis.title = element_text(size = 15)) +
   
-  theme(text = element_text(size = 20))+
+  theme(text = element_text(size = 15))+
   theme(plot.margin = margin(0.2, 0.3, 0.3, 0.3, "cm"))
 
 dev.off()
@@ -630,10 +631,10 @@ env2<-cbind.data.frame( rep(tempo_hora2,4),c(zeta2,gama_aw2,gama_ph2,gama_t2),
 colnames(env2)<-c("time","value","factor")
 
 
-tiff(file=here("Figure","environment2.tiff"), height = 4, width = 6, units = 'in', res=300)
+tiff(file=here("Figure","Fig3.tiff"), height = 4, width = 8, units = 'in', res=300)
 
 ggplot(env2,aes(x=time,y=value,group=factor))+
-  geom_line(aes(linetype=factor),size=1.5)+
+  geom_line(aes(linetype=factor),size=1)+
   labs( y=expression(paste(gamma[x],(x[i]))), x = 'Time (hours)')+
   
   scale_linetype_manual(values = c("solid","dashed", "dotted","dotdash"),
@@ -642,15 +643,15 @@ ggplot(env2,aes(x=time,y=value,group=factor))+
   scale_size_manual(values=c(1.5,1.5,1.5,1.5),guide=F)+
   theme(legend.key.width = unit(2,"cm"))+
   
-  theme(axis.text.x = element_text(colour = 'black', size = 20),
-        axis.title.x=element_text(size = 20, 
-                                  hjust = 0.5, vjust = 0.2),axis.title = element_text(size = 20)) +
+  theme(axis.text.x = element_text(colour = 'black', size = 15),
+        axis.title.x=element_text(size = 15, 
+                                  hjust = 0.5, vjust = 0.2),axis.title = element_text(size = 15)) +
   
-  theme(axis.text.y = element_text(colour = 'black', size = 20), 
-        axis.title.y = element_text(size = 20, 
-                                    hjust = 0.5, vjust = 3),axis.title = element_text(size = 20)) +
+  theme(axis.text.y = element_text(colour = 'black', size = 15), 
+        axis.title.y = element_text(size = 15, 
+                                    hjust = 0.5, vjust = 3),axis.title = element_text(size = 15)) +
   
-  theme(text = element_text(size = 20))+
+  theme(text = element_text(size = 15))+
   theme(plot.margin = margin(0.2, 0.3, 0.3, 0.3, "cm"))
 
 dev.off()
@@ -705,10 +706,10 @@ stoc<-cbind.data.frame(rep(tempo_hora,3),c(media,perc2_5,perc97_5),
 colnames(stoc)<-c("time","value","stat")
 
 
-tiff(file=here("Figure","estocastic.tiff"), height = 4, width = 6, units = 'in', res=300)
+tiff(file=here("Figure","Fig6.tiff"), height = 4, width = 8, units = 'in', res=300)
 
 ggplot(stoc,aes(x=time,y=value,group=stat))+
-  geom_line(aes(linetype=stat),size=1.5)+
+  geom_line(aes(linetype=stat),size=1)+
   labs( y="log10(CFU/g)", x = 'Time (hours)')+
   
   scale_linetype_manual(values = c("dashed","solid", "dashed"),
@@ -716,15 +717,15 @@ ggplot(stoc,aes(x=time,y=value,group=stat))+
   scale_size_manual(values=c(1.5,1.5,1.5),guide=F)+
   theme(legend.position="none")+
   
-  theme(axis.text.x = element_text(colour = 'black', size = 20),
-        axis.title.x=element_text(size = 20, 
-                                  hjust = 0.5, vjust = 0.2),axis.title = element_text(size = 20)) +
+  theme(axis.text.x = element_text(colour = 'black', size = 15),
+        axis.title.x=element_text(size = 15, 
+                                  hjust = 0.5, vjust = 0.2),axis.title = element_text(size = 15)) +
   
-  theme(axis.text.y = element_text(colour = 'black', size = 20), 
-        axis.title.y = element_text(size = 20, 
-                                    hjust = 0.5, vjust = 3),axis.title = element_text(size = 20)) +
+  theme(axis.text.y = element_text(colour = 'black', size = 15), 
+        axis.title.y = element_text(size = 15, 
+                                    hjust = 0.5, vjust = 3),axis.title = element_text(size = 15)) +
   
-  theme(text = element_text(size = 20))+
+  theme(text = element_text(size = 15))+
   theme(plot.margin = margin(0.2, 0.3, 0.3, 0.3, "cm"))+
   
   annotate(geom="text", x=185, y=0.2, label="132 hours",
@@ -769,7 +770,7 @@ cbind(
 
 
 #log10CFU graphs
-tiff(file=here("Figure","model.tiff"), height = 4, width = 7, units = 'in', res=300)
+tiff(file=here("Figure","Fig2.tiff"), height = 4, width = 7, units = 'in', res=300)
 
 grid.arrange(p1, p2, widths = c(0.5, 0.5),layout_matrix = rbind(c(1, 2),
                                                                 c(1, 2)))
@@ -777,7 +778,7 @@ grid.arrange(p1, p2, widths = c(0.5, 0.5),layout_matrix = rbind(c(1, 2),
 dev.off()
 
 
-tiff(file=here("Figure","validation.tiff"), height = 4, width = 7, units = 'in', res=300)
+tiff(file=here("Figure","Fig4.tiff"), height = 4, width = 7, units = 'in', res=300)
 
 grid.arrange(p3, p4, widths = c(0.5, 0.5),layout_matrix = rbind(c(1, 2),
                                                                 c(1, 2)))
