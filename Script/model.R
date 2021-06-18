@@ -1,5 +1,5 @@
 #########################
-#######General model#####
+#######Fitting model#####
 #########################
 
 theme_set(theme_minimal())
@@ -162,7 +162,7 @@ t_ast<-12
 t_c<-22
 t_opt_reduc<-10.5
 
-##Parametro da weibull fixo
+##Weibull parameter fixed
 p<-2.27
 
 ##Lambdas
@@ -253,12 +253,12 @@ for (i in 2:23){
 
 
 
-
+# Creating plots
 p1<-ggplot()+
   geom_point(aes(x=tempo_hora,y=UFC),size=2)+
   geom_line(aes(x=tempo_hora,y=CFU),size=1)+
   labs(title= "A",
-       y='log10(CFU/g)', x = 'Time(hours)')+
+       y='log10(cfu/g)', x = 'Time(hours)')+
   
   theme(axis.text.x = element_text(colour = 'black', size = 15),
         axis.title.x=element_text(size = 15, 
@@ -277,7 +277,7 @@ p2<-ggplot()+
   geom_point(aes(x=UFC,y=CFU),size=2)+
   geom_abline(intercept = reg$coefficients[1], slope = reg$coefficients[2],size=1)+
   labs(title= "B",
-       y='Observed log10(CFU/g)', x = 'Predicted log10(CFU/g)')+
+       y='Observed log10(cfu/g)', x = 'Predicted log10(cfu/g)')+
   
   theme(axis.text.x = element_text(colour = 'black', size = 15),
         axis.title.x=element_text(size = 15, 
@@ -434,7 +434,7 @@ for (i in 1:20){
 
 
 
-##Xi zeta and interação
+##Xi zeta and interaction
 
 psi2<-as.numeric()
 
@@ -554,7 +554,7 @@ p3<-ggplot()+
   geom_point(aes(x=tempo_hora2,y=UFC2),size=2)+
   geom_line(aes(x=tempo_hora2,y=CFU2),size=1)+
   labs(title= "A",
-       y='log10(CFU/g)', x = 'Time(hours)')+
+       y='log10(cfu/g)', x = 'Time(hours)')+
   
   theme(axis.text.x = element_text(colour = 'black', size = 15),
         axis.title.x=element_text(size = 15, 
@@ -574,7 +574,7 @@ p4<-ggplot()+
   geom_point(aes(x=UFC2,y=CFU2),size=2)+
   geom_abline(intercept = reg2$coefficients[1], slope = reg2$coefficients[2],size=1)+
   labs(title= "B",
-       y='Observed log10(CFU/g)', x = 'Predicted log10(CFU/g)')+
+       y='Observed log10(cfu/g)', x = 'Predicted log10(cfu/g)')+
   
   theme(axis.text.x = element_text(colour = 'black', size = 15),
         axis.title.x=element_text(size = 15, 
@@ -606,7 +606,7 @@ ggplot(env1,aes(x=time,y=value,group=factor))+
     labs( y=expression(paste(gamma[x],(x[i]))), x = 'Time (hours)')+
     
   scale_linetype_manual(values = c("solid","dashed", "dotted","dotdash"),
-                        labels = c('Aw','pH','T',expression(xi)),
+                        labels = c(expression(a[w]),'pH','T',expression(xi)),
                         name="")+
   scale_size_manual(values=c(1.5,1.5,1.5,1.5),guide=F)+
   theme(legend.key.width = unit(2,"cm"))+
@@ -638,7 +638,7 @@ ggplot(env2,aes(x=time,y=value,group=factor))+
   labs( y=expression(paste(gamma[x],(x[i]))), x = 'Time (hours)')+
   
   scale_linetype_manual(values = c("solid","dashed", "dotted","dotdash"),
-                        labels = c('Aw','pH','T',expression(xi)),
+                        labels = c(expression(a[w]),'pH','T',expression(xi)),
                         name="")+
   scale_size_manual(values=c(1.5,1.5,1.5,1.5),guide=F)+
   theme(legend.key.width = unit(2,"cm"))+
@@ -710,7 +710,7 @@ tiff(file=here("Figure","Fig6.tiff"), height = 4, width = 8, units = 'in', res=3
 
 ggplot(stoc,aes(x=time,y=value,group=stat))+
   geom_line(aes(linetype=stat),size=1)+
-  labs( y="log10(CFU/g)", x = 'Time (hours)')+
+  labs( y="log10(cfu/g)", x = 'Time (hours)')+
   
   scale_linetype_manual(values = c("dashed","solid", "dashed"),
                         name="")+
