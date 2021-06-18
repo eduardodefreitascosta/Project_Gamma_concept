@@ -744,6 +744,7 @@ ggplot(stoc,aes(x=time,y=value,group=stat))+
 dev.off()
 
 
+
 #Save the final model
 save.image(file=here("Results" ,"modelo.RData"))
 
