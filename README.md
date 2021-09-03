@@ -1,12 +1,12 @@
 
 
-[![DOI](https://zenodo.org/badge/DOI/10.1007/s42081-021-00124-0.svg)](https://link.springer.com/article/10.1007/s42081-021-00124-0)
+[![DOI](https://zenodo.org/badge/DOI/10.1016/j.mran.2021.100177.svg)](https://www.sciencedirect.com/science/article/pii/S2352352221000190)
 
 
 
 # This is a paper describying the growth and inactivarion of *Salmonella* spp. in salami in Brazilian industrial conditions .
 
-## The paper is available online:
+## The paper is available online: https://www.sciencedirect.com/science/article/pii/S2352352221000190
 
 
 
