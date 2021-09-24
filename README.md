@@ -6,6 +6,8 @@
 
 # This is a paper describying the growth and inactivarion of *Salmonella* spp. in salami in Brazilian industrial conditions .
 
+:microscope: :microbe: :chart_with_upwards_trend:
+
 ## The paper is available online: https://www.sciencedirect.com/science/article/pii/S2352352221000190
 
 
